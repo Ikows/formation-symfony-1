@@ -1,2 +1,19 @@
 framework:
-    workflows: null
+    workflows:
+        post_state:
+            supports:
+                - '\App\Entity\Post'
+            marking_store:
+                type: 'method'
+                property: 'status'
+            places:
+                - !php/const \App\Entity\Post::STATUS_DRAFT
+                - !php/const \App\Entity\Post::STATUS_PUBLISHED
+                - !php/const \App\Entity\Post::STATUS_ARCHIVED
+            transitions:
+                publish:
+                    from: [!php/const \App\Entity\Post::STATUS_DRAFT]
+                    to: [!php/const \App\Entity\Post::STATUS_PUBLISHED]
+                archive:
+                    from: [!php/const \App\Entity\Post::STATUS_PUBLISHED]
+                    to: [!php/const \App\Entity\Post::STATUS_ARCHIVED]

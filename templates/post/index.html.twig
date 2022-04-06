@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PostController!{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>{{ post.id }} : {{ post.title }} : {{ post.status }}</h1>
+        <div class="row justify-content-center" style="margin-top: 30vh">
+            <div class="col-3 text-center">
+                {% if workflow_can(post, 'archive') %}
+                    <a class="animate__animated animate__pulse animate__infinite btn btn-warning" href="{{ path('app_post', {id: post.id, 'apply': constant('\\App\\Entity\\Post::TRANSITION_ARCHIVE')}) }}">Archiver</a>
+                {% endif %}
+            </div>
+            <div class="col-3 text-center">
+                {% if workflow_can(post, 'publish') %}
+                <a class="animate__animated animate__pulse animate__infinite btn btn-primary me-3" href="{{ path('app_post', {id: post.id, 'apply': constant('\\App\\Entity\\Post::TRANSITION_PUBLISH')}) }}">Publier</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
